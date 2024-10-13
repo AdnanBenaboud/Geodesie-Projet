@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeodesieOpe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+
+</head>
+<body>
+
+    <div class="flex-container">
+
+        <div>
+            <nav class="navbar navbar-expand-lg bg-body-tertiary rounded fixed-top yp-5" aria-label="Twelfth navbar example" style="margin-bottom: 40px;">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+            
+                    <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#section-transformation">Transformation des coordonnées</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            
+        </div>
+
+        <div class="container col-xxl-8 px-4 py-5">
+            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+            <div class="col-10 col-sm-8 col-lg-6">
+                <img src="{{ url_for('static', filename='logo_sm.png')}}" class="d-block mx-lg-auto img-fluid" alt="Geodesie" width="300" loading="lazy">
+            </div>
+            <div class="col-lg-6">
+                <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">GeodesieOpe</h1>
+                <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+            </div>
+            </div>
+        </div>
+
+        
+        <section id="section-transformation">
+            <div>
+                <button class="Trans-choice TGC" id="showSection1">Transfomation des coordonnées géographiques vers les coordonnées cartisiennes</button>
+                <button class="Trans-choice TCG" id="showSection2">Transfomation des coordonnées cartesiennes vers les coordonnées géographiques</button>
+            </div>
+
+            <div class="section1Class" id="section1" style="display: none;">
+                <section id="section1">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div style="width: 100%;">
+                                <form id="geoForm" method="post">
+                                    <legend>Transformation des coordonnées géographiques vers les coordonnées cartisiennes</legend>
+                                    
+                                    <div class="mb-3">
+                                        <label for="phiDegree" class="form-label">Phi</label>
+                                        <input type="number" step="any" id="phiDegree" class="form-control" name="PhiDegreeName" placeholder="degree °">
+                                        <input type="number" step="any" id="phiMin" class="form-control" name="PhiMinName" placeholder="minute '">
+                                        <input type="number" step="any" id="phiSec" class="form-control" name="PhiSecName" placeholder="seconde ''">
+                                        <input type="radio" id="north" name="phiDirection" value="N" required>
+                                        <label for="north">Nord</label><br>
+                                        <input type="radio" id="south" name="phiDirection" value="S">
+                                        <label for="south">Sud</label><br>
+                                    </div>
+            
+                                    <div class="mb-3">
+                                        <label for="lambdaDegree" class="form-label">Lambda</label>
+                                        <input type="number" step="any" id="lambdaDegree" class="form-control" name="LambdaDegreeName" placeholder="degree °">
+                                        <input type="number" step="any" id="lambdaMin" class="form-control" name="LambdaMinName" placeholder="minute '">
+                                        <input type="number" step="any" id="lambdaSec" class="form-control" name="LambdaSecName" placeholder="seconde ''">
+                                        <input type="radio" id="east" name="lambdaDirection" value="E" required>
+                                        <label for="east">Est</label><br>
+                                        <input type="radio" id="west" name="lambdaDirection" value="W">
+                                        <label for="west">Ouest</label><br>
+                                    </div>
+            
+                                    <div class="mb-3">
+                                        <label for="hValue" class="form-label">h</label>
+                                        <input type="number" step="any" id="hValue" class="form-control" name="hName" placeholder="metre">
+                                    </div>
+            
+                                    <div class="mb-3">
+                                        <label for="ellipsoidSelect" class="form-label">Ellipsoide</label>
+                                        <select id="ellipsoidSelect" class="form-select" name="EllipsoideChoice1">
+                                            <option>Clarke 1880</option>
+                                            <option value="">WGS84</option>
+                                        </select>
+                                    </div>
+            
+                                    <button type="submit" class="btn btn-primary">Calculer</button>
+                                </form>
+                            </div>
+                        </div>
+            
+                        <div class="col-lg-6">
+                            <div id="resultSection">
+                                <legend>Résultats</legend>
+            
+                                <div class="mb-3">
+                                    <label for="xResult" class="form-label">X(metre)</label>
+                                    <input type="number" id="xResult" class="form-control" readonly>
+                                </div>
+            
+                                <div class="mb-3">
+                                    <label for="yResult" class="form-label">Y(metre)</label>
+                                    <input type="number" id="yResult" class="form-control" readonly>
+                                </div>
+            
+                                <div class="mb-3">
+                                    <label for="zResult" class="form-label">Z(metre)</label>
+                                    <input type="number" id="zResult" class="form-control" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+
+
+            <div class="section2Class" id="section2" style="display: none;">
+                <section id="section2">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div style="width: 100%;">
+                                <form id="cartToGeoForm">
+                                    <legend>Transfomation des coordonnées cartesiennes vers les coordonnées géographiques</legend>
+                                    
+                                    <div class="mb-3">
+                                        <label for="xInput" class="form-label">X</label>
+                                        <input type="number" step="any" id="xInput" class="form-control" placeholder="metre">
+                                    </div>
+            
+                                    <div class="mb-3">
+                                        <label for="yInput" class="form-label">Y</label>
+                                        <input type="number" step="any" id="yInput" class="form-control" placeholder="metre">
+                                    </div>
+            
+                                    <div class="mb-3">
+                                        <label for="zInput" class="form-label">Z</label>
+                                        <input type="number" step="any" id="zInput" class="form-control" placeholder="metre">
+                                    </div>
+            
+                                    <div class="mb-3">
+                                        <label for="ellipsoidSelect2" class="form-label">Ellipsoide</label>
+                                        <select id="ellipsoidSelect2" class="form-select" name="EllipsoideChoice1">
+                                            <option>Clarke 1880</option>
+                                            <option>WGS84</option>
+                                        </select>
+                                    </div>
+            
+                                    <button type="submit" class="btn btn-primary">Calculer</button>
+                                </form>
+                            </div>
+                        </div>
+            
+                        <div class="col-lg-6">
+                            <div id="resultSection2">
+                                <legend>Résultats</legend>
+            
+                                <div class="mb-3">
+                                    <label for="phiResult" class="form-label">Phi</label>
+                                    <input type="number" id="phiResult" class="form-control" readonly>
+                                </div>
+            
+                                <div class="mb-3">
+                                    <label for="lambdaResult" class="form-label">Lambda</label>
+                                    <input type="number" id="lambdaResult" class="form-control" readonly>
+                                </div>
+            
+                                <div class="mb-3">
+                                    <label for="hResult" class="form-label">h</label>
+                                    <input type="number" id="hResult" class="form-control" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+
+<script src="{{ url_for('static', filename='index.js')}}" charset="UTF-8"></script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+body{
+    margin: 20px;
+}
+
+.invisible{
+    visibility: hidden;
+}
+
+.flex-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.Trans-choice{
+    display: inline-block;
+}
